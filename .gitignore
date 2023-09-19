@@ -1,0 +1,17 @@
+imgs_projs/
+.texpadtmp
+main.pdf
+*.aux
+*.out
+*.xml
+*.thm
+*.toc
+*.lof
+*.lot
+*.bbl
+*.bcf
+*.blg
+*.idx
+*.ind
+*.log
+*.gz
