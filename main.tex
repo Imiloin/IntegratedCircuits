@@ -119,6 +119,28 @@
 \usepackage[backend=biber]{biblatex}
 \addbibresource{references.bib}
 
+%%% 自定义部分
+\usepackage{siunitx} % 单位，\qty{数值}{单位}
+
+\usepackage{caption} % Required for customizing captions
+\captionsetup{skip=6pt} % Vertical whitespace between figures/tables and the caption (default is 10pt)
+\captionsetup{font={bf}} % Define caption font style
+
+\usepackage{booktabs} % 三线表
+\setlength{\aboverulesep}{10pt}
+\usepackage{multirow} % 表格中的多行合并
+\usepackage{makecell} % 表格中的换行
+\usepackage{colortbl} % 表格中的单元格颜色，\rowcolor{颜色}、\columncolor{颜色}、\cellcolor{颜色}
+\usepackage{nicematrix} % 更好的表格
+
+\usepackage{parskip}
+\setlength{\parskip}{0.5em} % 段落间距
+\setlength{\parindent}{2em} % 段首缩进
+
+\definecolor{deep-blue}{RGB}{0, 0, 176}
+\definecolor{deep-red}{RGB}{176, 0, 0}
+%%%
+
 \begin{document}
 	\frontmatter	% 制作封面和目录.
 	% 注意: 为了简化, 本模板不含封面. 请通过文档类的参数进行设置.
@@ -131,9 +153,11 @@
 	\part{Semicounductor Physics}
 
 	\include{chapter1}
+	\include{chapter2}
 
 	% % % % % % % % % %
 	\part{Semicounductor Devices}
+	\include{chapter3}
 
 	% % % % % % % % % %
 	\part{Analog Integrated Circuits}

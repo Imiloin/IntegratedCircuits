@@ -1,0 +1,72 @@
+\chapter[MOSFET]{Metal-Oxide-Semiconductor \\ Field-Effect Transistor}
+
+本章使用的符号如表 \ref{tab:mosfet-symbols} 所示。
+
+\begin{table}[!htb]
+    \centering
+    \caption{MOSFET 符号表}
+    \label{tab:mosfet-symbols}
+    \begin{NiceTabular}{c|c|c}
+        \Xhline{1pt}
+        \textbf{Symbol} & \textbf{Meaning} & \textbf{Unit} \\ \hline
+        $V_{\rm{DD}}$ & Drain voltage & $\unit{\volt}$ \\
+        $V_{\rm{SS}}$ & Source voltage & $\unit{\volt}$ \\
+        $V_{\rm{GG}}$ & Gate voltage & $\unit{\volt}$ \\
+        $V_{\rm{BB}}$ & Bulk voltage & $\unit{\volt}$ \\
+        $V_{\rm{TH}}$ & Threshold voltage & $\unit{\volt}$ \\
+        $V_{\rm{DS}}$ & Drain-source voltage & $\unit{\volt}$ \\
+        $V_{\rm{GS}}$ & Gate-source voltage & $\unit{\volt}$ \\
+        $V_{\rm{GB}}$ & Gate-bulk voltage & $\unit{\volt}$ \\
+        $V_{\rm{SB}}$ & Source-bulk voltage & $\unit{\volt}$ \\
+        $I_{\rm{D}}$ & Drain current & $\unit{\ampere}$ \\
+        $I_{\rm{S}}$ & Source current & $\unit{\ampere}$ \\
+        $I_{\rm{G}}$ & Gate current & $\unit{\ampere}$ \\
+        $I_{\rm{B}}$ & Bulk current & $\unit{\ampere}$ \\
+        $I_{\rm{DS}}$ & Drain-source current & $\unit{\ampere}$ \\
+        $I_{\rm{GS}}$ & Gate-source current & $\unit{\ampere}$ \\
+        $I_{\rm{GB}}$ & Gate-bulk current & $\unit{\ampere}$ \\
+        $I_{\rm{SB}}$ & Source-bulk current & $\unit{\ampere}$ \\
+        $W$ & Channel width & $\unit{\meter}$ \\
+        $L$ & Channel length & $\unit{\meter}$ \\
+        $C_{\rm{OX}}$ & Oxide capacitance & $\unit{\farad}$ \\
+        \Xhline{1pt}
+    \end{NiceTabular}
+\end{table}
+
+\section[MOS]{Metal-Oxide-Semicounductor Capacitor}
+
+\section{Structure of MOSFET}
+
+MOSFET\footnote{本章中的MOSFET均为绝缘栅型，不考虑结型} 分为两类: \textbf{n-channel（n沟道）} 和 \textbf{p-channel（p沟道）}。其导电载流子分别为电子和空穴。
+每一类又分为两种: \textbf{depletion（耗尽型）} 和 \textbf{enhancement（增强型）}。耗尽型的 MOSFET 的沟道是一直存在的，而增强型的 MOSFET 的沟道是需要外加电压才能形成的。
+
+表 \ref{tab:mosfet-types} 总结了这四种 MOSFET 的特点。
+
+\begin{table}[!htb]
+    \centering
+    \caption{MOSFET 的类型}
+    \label{tab:mosfet-types}
+    \begin{NiceTabular}{c|cccc}
+        \Xhline{1pt}
+        & \makecell[c]{{\textbf{N-channel}} \\ \textbf{Depletion}} & \makecell[c]{{\textbf{N-channel}} \\ \textbf{Enhancement}} & \makecell[c]{{\textbf{P-channel}} \\ \textbf{Depletion}} & \makecell[c]{{\textbf{N-channel}} \\ \textbf{Enhancement}} \\ 
+        \hline
+        \multirowcell{-3}{\textbf{Symbol}} & \includegraphics*[width=0.08\textwidth]{n_dep.pdf} & \includegraphics*[width=0.08\textwidth]{n_enh.pdf} & \includegraphics*[width=0.08\textwidth]{p_dep.pdf} & \includegraphics*[width=0.08\textwidth]{p_enh.pdf} \\
+        \hline
+        \textbf{Oxide} & positive ion doping & no ion doping & negative ion doping & no ion doping \\
+        \textbf{Operation} & always on & off when $V_{\rm{GS}} = 0$ & always on & off when $V_{\rm{GS}} = 0$ \\
+        \textbf{Source} & n+, electron out & n+, electron out & p+, hole out & p+, hole out \\
+        \textbf{Drain} & n+, electron in & n+, electron in & p+, hole in & p+, hole in \\
+        \textbf{Gate} & usually VDD & usually VDD & usually GND & usually GND \\
+        \textbf{Body} & p, usually GND & p, usually GND & n, usually VDD & n, usually VDD \\
+        $\bm{V_{\rm{TH}}}$ & negative & positive & positive & negative \\
+        $\bm{I_{\rm{D}}}$ & positive & positive & negative & negative \\
+        $\bm{V_{\rm{DS}}}$ & positive & positive & negative & negative \\
+        $\bm{V_{\rm{GS}}}$ & > $V_{\rm{TH}}$ & > $V_{\rm{TH}}$ & < $V_{\rm{TH}}$ & < $V_{\rm{TH}}$ \\
+        \multirowcell{-3}{\textbf{Output} \\ \textbf{Characteristics}} & \includegraphics*[width=0.17\textwidth]{n_dep_out.pdf} & \includegraphics*[width=0.17\textwidth]{n_enh_out.pdf} & \includegraphics*[width=0.17\textwidth]{p_dep_out.pdf} & \includegraphics*[width=0.17\textwidth]{p_enh_out.pdf} \\
+        \multirowcell{-3}{\textbf{Transfer} \\ \textbf{Characteristics}} & \includegraphics*[width=0.17\textwidth]{n_dep_tran.pdf} & \includegraphics*[width=0.17\textwidth]{n_enh_tran.pdf} & \includegraphics*[width=0.17\textwidth]{p_dep_tran.pdf} & \includegraphics*[width=0.17\textwidth]{p_enh_tran.pdf} \\
+        \Xhline{1pt}
+    \end{NiceTabular}
+\end{table}
+
+在集成电路设计中，我们通常使用\textbf{增强型 MOSFET}，因为它的沟道是需要外加电压才能形成的，可以更好地控制其电流。而耗尽型 MOSFET 的沟道是一直存在的，所以它的电流无法被控制。在不作特殊说明的情况下，本章中的 MOSFET 均为增强型。
+

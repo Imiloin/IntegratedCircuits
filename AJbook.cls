@@ -307,8 +307,8 @@
 	\geometry{
 		paper=a4paper,
 		top=3cm,
-		inner=2.54cm,
-		outer=2.54cm,
+		inner=2cm,
+		outer=2cm,
 		bottom=3cm,
 		headheight=6ex,
 		headsep=6ex,
