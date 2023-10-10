@@ -68,8 +68,8 @@ MOSFET\footnote{本章中的MOSFET均为绝缘栅型，不考虑结型} 分为�
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.5\textwidth]{mosfet_3d.jpg}
-    \caption{MOSFET 结构}
+    \includegraphics[width=0.5\textwidth]{mosfet_3d.pdf}
+    \caption{MOSFET 结构\cite{Modern-VLSI}}
     \label{fig:mosfet_3d}
 \end{figure}
 
@@ -172,6 +172,13 @@ MOSFET 有线性（linear）、饱和（saturation）和截止（cutoff）三种
 \end{equation}
 需要注意，沟道长度调制仅在饱和区生效，只有在饱和区才会出现沟道长度的变化$\Delta L$。
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{channel_length_modulation.pdf}
+    \caption{沟道长度调制\cite{NeamenSemiconductor}}
+    \label{fig:channel_length_modulation}
+\end{figure}
+
 %%%%
 \subsection{Subthreshold Conduction}
 
@@ -213,7 +220,7 @@ PMOSFET 的 I-V 特性为
 \end{equation}
 其中 $V_{\rm{max}} = \max \left(V_{\rm{GS}} - V_{\rm{TH}}, V_{\rm{DS}}, V_{\rm{DSAT}}\right)$。
 
-\begin{figure}
+\begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.5\textwidth]{nmos_iv_regions.png}
     \caption{NMOSFET 的 工作状态}

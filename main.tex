@@ -119,6 +119,8 @@
 \usepackage[backend=biber]{biblatex}
 \addbibresource{references.bib}
 
+\usepackage{bookmark} % 书签，需要在 hyperref 之后
+
 %%% 自定义部分
 \usepackage{siunitx} % 单位，\qty{数值}{单位}
 
@@ -165,16 +167,20 @@
 	% % % % % % % % % %
 	\part{Digital Integrated Circuits}
 
+	\bookmarksetupnext{level=-1}	
 	\include{appendix}
 
 	% % % % % % % % % %
 	\backmatter
+	\bookmarksetupnext{level=-1}
 	% 使用 bibLaTeX 制作书目
 	\nocite{*}	% 列出所有参考文献, 即使未在正文中引用
 	\printbibliography[heading=bibintoc]
 	
 	% 图, 表索引. 可有可无.
+	\bookmarksetupnext{level=-1}
 	\listoffigures
+	\bookmarksetupnext{level=-1}
 	\listoftables
 
 	% 制作索引 (用 imakeidx 的功能可以制作多份)
