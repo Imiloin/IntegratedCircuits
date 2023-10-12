@@ -16,6 +16,8 @@
         $I_{\rm{DS}}$ & 漏源电流(Drain-source current) & $\unit{\ampere}$ & n$+$, p$-$ \\
         $W$ & 沟道宽度(Channel width) & $\unit{\meter}$ & $+$ \\
         $L$ & 沟道长度(Channel length) & $\unit{\meter}$ & $+$ \\
+        $\varepsilon_{\rm{ox}}$ & 氧化层介电常数(Oxide permittivity) & $\unit{\farad \per \meter}$ & $+$\tabularnote{For $\rm{SiO_2}$, $\varepsilon_{\rm{ox}} = 3.9 \varepsilon_0 = \qty{3.5e-11}{\farad \per \meter}$} \\
+        $t_{\rm{ox}}$ & 氧化层厚度(Oxide thickness) & $\unit{\meter}$ & $+$ \\
         $C_{\rm{ox}}$ & 单位面积氧化层电容(Oxide capacitance) & $\unit{\farad \per \meter \squared}$ & $+$ \\
         $\mu_{\rm{n}}$/$\mu_{\rm{p}}$ & 电子/空穴迁移率(mobility) & $\unit{\meter \squared \per \volt \per \second}$ & $+$ \\
         $k_{\rm{n}}$/$k_{\rm{p}}$ & 增益因子(Gain Factor) & $\unit{\ampere \meter \squared \per \volt \squared}$ & n$+$, p$-$ \\
@@ -24,6 +26,9 @@
         $\lambda$ & 沟道长度调制系数(Channel length modulation coefficient) & $\unit{\volt \tothe{-1}}$ & n$+$, p$-$ \\
         \Xhline{1pt}
     \end{NiceTabular}
+    \begin{tablenotes}
+        \item This is the first note.
+    \end{tablenotes}
 \end{table}
 
 \section[MOS]{Metal-Oxide-Semicounductor Capacitor}
@@ -229,3 +234,89 @@ PMOSFET 的 I-V 特性为
 
 %%%
 \section{MOSFET C-V Characteristics}
+
+MOSFET 的电容可以概括为栅、漏、源、体四个 terminal 之间的电容，如图 \ref{fig:mosfet_capacitance} 所示。
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.5\textwidth]{MOS_Capacitance.pdf}
+    \caption{MOSFET 的电容\cite{CMOS-VLSI}}
+    \label{fig:mosfet_capacitance}
+\end{figure}
+
+电容的来源可以分为以下三部分：
+\begin{itemize}
+    \item 结构电容（MOS structure capacitances）：结构电容是由于 MOS 结构的特性而产生的电容。结构电容的大小与 MOS 结构的面积、厚度、介电常数有关。
+    \begin{itemize}
+        \item 覆盖电容（Overlap Capacitance）：$C_{\rm{overlap}} = C_{\rm{GSO}} + C_{\rm{GDO}}$。覆盖电容是由源和漏在氧化层下延展的横向扩散所引起的栅和源漏间的寄生电容。
+    \end{itemize}
+    \item 栅至沟道的电容（Gate-to-channel Capacitance）：$C_{\rm{GC}} = C_{\rm{GCB}} + C_{\rm{GCS}} + C_{\rm{GCD}}$。沟道电容取决于晶体管的工作区间，产生晶体管工作所需的沟道电荷。
+    \begin{itemize}
+        \item 栅体沟道电容（Gate-Body Channel Capacitance）：$C_{\rm{GCB}}$。
+        \item 栅源沟道电容（Gate-Source Channel Capacitance）：$C_{\rm{GCS}}$。
+        \item 栅漏沟道电容（Gate-Drain Channel Capacitance）：$C_{\rm{GCD}}$。
+    \end{itemize}
+    \item 扩散电容/结电容（Juction/Diffusion Capacitance）：$C_{\rm{diff}} = C_{\rm{Sdiff}} + C_{\rm{Ddiff}}$。扩散电容/结电容是扩散区处于反向偏置的源体、漏体间的pn结引起的电容。
+    \begin{itemize}
+        \item 源扩散电容（Source Diffusion Capacitance）：$C_{\rm{Sdiff}}$。
+        \item 漏扩散电容（Drain Diffusion Capacitance）：$C_{\rm{Ddiff}}$。
+    \end{itemize}
+\end{itemize}
+
+这样，栅电容 $C_{\rm{GS}}$, $C_{\rm{GB}}$, $C_{\rm{GD}}$ 分别可以表示为
+\begin{equation}
+    \begin{aligned}
+        C_{\rm{GS}} &= C_{\rm{GCS}} + C_{\rm{GSO}} \\
+        C_{\rm{GB}} &= C_{\rm{GCB}} \\
+        C_{\rm{GD}} &= C_{\rm{GCD}} + C_{\rm{GDO}}
+    \end{aligned}
+\end{equation}
+结电容 $C_{\rm{SB}}$, $C_{\rm{DB}}$ 分别可以表示为
+\begin{equation}
+    \begin{aligned}
+        C_{\rm{SB}} &= C_{\rm{Sdiff}} \\
+        C_{\rm{DB}} &= C_{\rm{Ddiff}}
+    \end{aligned}
+\end{equation}
+
+电容相关的符号如表 \ref{tab:mosfet-capacitance-symbols} 所示。
+\begin{table}[!htb]
+    \centering
+    \caption{MOSFET 电容符号表}
+    \label{tab:mosfet-capacitance-symbols}
+    \begin{NiceTabular}{cccc}
+        \Xhline{1pt}
+        \textbf{Symbol} & \textbf{Meaning} & \textbf{Unit} & \textbf{Polarity} \\ \hline
+        $C_{\rm{ox}}$ & 单位面积栅氧电容(Gate Oxide Capacitance per unit area) & $\unit{\farad \per \meter \squared}$ & $+$ \\
+        $C_{\rm{overlap}}$ & 总覆盖电容(Overlap capacitance) & $\unit{\farad}$ & $+$ \\
+        $C_{\rm{GSO}}$ & 栅源间覆盖电容(Gate-source overlap capacitance) & $\unit{\farad}$ & $+$ \\
+        $C_{\rm{GDO}}$ & 栅漏间覆盖电容(Gate-drain overlap capacitance) & $\unit{\farad}$ & $+$ \\
+        $C_{\rm{o}}$ & 单位晶体管宽度覆盖电容(Overlap capacitance per unit transistor width) & $\unit{\farad \per \meter}$ & $+$ \\
+        $x_{\rm{d}}$ & 横向扩散距离(Lateral diffusion distance) & $\unit{\meter}$ & $+$ \\
+        \Xhline{1pt}
+    \end{NiceTabular}
+\end{table}
+
+
+%%%%
+\subsection{Gate Capacitance}
+栅电容可以进一步分为两部分：覆盖电容$C_{\rm{overlap}}$和沟道电容$C_{\rm{GC}}$。
+\subsubsection{Structure Capacitance — Overlap Capacitance}
+当通过扩散形成源区和漏区时，理想中，源和漏的扩散应当恰好终止在栅氧的边界上，但是，实际情况是，源和漏的边界都会往栅氧下延伸$x_{\rm{d}}$的距离，这被称为横向扩散，这就导致了栅氧覆盖了一定面积的源区和漏区，从而形成了栅和源漏间的\textbf{覆盖电容（Overlap Capacitance）}，如图 \ref{fig:overlap_capacitance} 所示。
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.5\textwidth]{MOS_overlap.pdf}
+    \caption{覆盖电容}
+    \label{fig:overlap_capacitance}
+\end{figure}
+
+假设两侧的横向扩散距离相同，即$x_{\rm{d}} = x_{\rm{dS}} = x_{\rm{dD}}$，则覆盖电容为
+\begin{equation}
+    \begin{aligned}
+        C_{\rm{GSO}} &= C_{\rm{GDO}} = C_{\rm{ox}} x_{\rm{d}} W = C_{\rm{o}} W \\
+        C_{\rm{overlap}} &= C_{\rm{GSO}} + C_{\rm{GDO}} = 2 C_{\rm{ox}} x_{\rm{d}} W = 2 C_{\rm{o}} W \\
+    \end{aligned}
+\end{equation}
+其中 $C_{\rm{ox}}$ = ${\varepsilon_{\rm{ox}}}$ / ${t_{\rm{ox}}}$。
+
+\subsubsection{Gate-to-Channel Capacitance}
