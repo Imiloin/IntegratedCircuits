@@ -226,21 +226,9 @@
 	}
 \fi
 
-% 习题提示 (定义为环境, 穿插文中)
-\newenvironment{hint}{%
-	\ifvmode % 用 \ifvmode 测试: 如果提示另起新段, 则不加空白.
-		\ignorespaces	% 消除横向空白, 优于 \unskip
-	\else
-		\quad	% 否则加入空白.
-	\fi
-	\begin{tikzpicture}[baseline=(H.base), every node/.style={signal, draw, very thin, signal to=east, signal from=nowhere, signal pointer angle=120, inner sep=2pt}]
-		\node[anchor=mid west] (H) at (0,0) {\heiti\footnotesize 提示};
-	\end{tikzpicture}
-}{}
-
 % 每章开头的学习提示 (定义为环境)
 \if@AJ@traditional
-	\newtcolorbox{wenxintishi}{
+	\newtcolorbox{hint}{
 		breakable,
 		enhanced,
 		width = \textwidth,
@@ -256,7 +244,7 @@
 		title={閱讀提示}
 	}
 \else
-	\newtcolorbox{wenxintishi}{
+	\newtcolorbox{hint}{
 		breakable,
 		enhanced,
 		width = \textwidth,

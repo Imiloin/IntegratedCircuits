@@ -9,11 +9,11 @@
     \begin{NiceTabular}{cccc}
         \Xhline{1pt}
         \textbf{Symbol} & \textbf{Meaning} & \textbf{Unit} & \textbf{Polarity} \\ \hline
-        $V_[TH]$ & 阈值电压(Threshold voltage) & $\unit{\volt}$ & n+, p- \\
-        $V_[DS]$ & 漏源电压(Drain-source voltage) & $\unit{\volt}$ & n+, p- \\
-        $V_[GS]$ & 栅源电压(Gate-source voltage) & $\unit{\volt}$ & n+, p- \\
-        $I_[D]$ & 漏电流(Drain current) & $\unit{\ampere}$ & n+, p- \\
-        $I_[DS]$ & 漏源电流(Drain-source current) & $\unit{\ampere}$ & n+, p- \\
+        $V_[TH]$ & 阈值电压(Threshold voltage) & $\unit{\volt}$ & N+, P- \\
+        $V_[DS]$ & 漏源电压(Drain-source voltage) & $\unit{\volt}$ & N+, P- \\
+        $V_[GS]$ & 栅源电压(Gate-source voltage) & $\unit{\volt}$ & N+, P- \\
+        $I_[D]$ & 漏电流(Drain current) & $\unit{\ampere}$ & N+, P- \\
+        $I_[DS]$ & 漏源电流(Drain-source current) & $\unit{\ampere}$ & N+, P- \\
         $W$ & 沟道宽度(Channel width) & $\unit{\meter}$ & + \\
         $L$ & 沟道长度(Channel length) & $\unit{\meter}$ & + \\
         $\varepsilon_[ox]$ & 氧化层介电常数(Oxide permittivity) & $\unit{\farad \per \meter}$ & +\tabularnote{For $\rm{SiO_2}$, $\varepsilon_[ox] = 3.9 \varepsilon_0 = \qty{3.5e-11}{\farad \per \meter}$} \\
@@ -21,15 +21,19 @@
         $C_[ox]$ & 单位面积氧化层电容(Oxide capacitance) & $\unit{\farad \per \meter \squared}$ & + \\
         $C_[o]$ & 单位晶体管宽度覆盖电容(Overlap cap per unit transistor width) & $\unit{\farad \per \meter}$ & + \\
         $\mu_[n]$/$\mu_[p]$ & 电子/空穴迁移率(mobility) & $\unit{\meter \squared \per \volt \per \second}$ & + \\
-        $k_[n]$/$k_[p]$ & 增益因子(Gain Factor) & $\unit{\ampere \meter \squared \per \volt \squared}$ & n+, p- \\
-        $k'_[n]$/$k'_[p]$ & 工艺跨导(Transconductance) & $\unit{\ampere \meter \squared \per \volt \squared}$ & n+, p- \\
-        $V_[DSAT]$ & 速度饱和电压(Velocity saturation voltage) & $\unit{\volt}$ & n+, p- \\
-        $\lambda$ & 沟道长度调制系数(Channel length modulation coefficient) & $\unit{\volt \tothe{-1}}$ & n+, p- \\
+        $k_[n]$/$k_[p]$ & 增益因子(Gain Factor) & $\unit{\ampere \meter \squared \per \volt \squared}$ & N+, P- \\
+        $k'_[n]$/$k'_[p]$ & 工艺跨导(Transconductance) & $\unit{\ampere \meter \squared \per \volt \squared}$ & N+, P- \\
+        $V_[DSAT]$ & 速度饱和电压(Velocity saturation voltage) & $\unit{\volt}$ & N+, P- \\
+        $\lambda$ & 沟道长度调制系数(Channel length modulation coefficient) & $\unit{\volt \tothe{-1}}$ & N+, P- \\
         $x_[d]$ & 横向扩散距离(Lateral diffusion distance) & $\unit{\meter}$ & + \\
+        $\phi_[F]$ & 费米势(Fermi potential) & $\unit{\eV}$ & n+, p- \\
+        $V_[SB]$ & 衬底偏置电压(Substrate bias between Source and Body) & $\unit{\volt}$ & N+, P- \\
+        $V_[TH0]$ & 零体效应阈值电压(Zero-body-effect threshold voltage) & $\unit{\volt}$ & N+, P- \\
+        $\gamma$ & 体效应系数(Body-effect coefficient) & $\unit{\volt\tothe{\frac{1}{2}}}$ & N+, P-\\
         \Xhline{1pt}
     \end{NiceTabular}
     \begin{tablenotes}
-        \item This is the first note.
+        \item 为避免混淆，在表示极性时，大写字母N, P表示NMOSFET和PMOSFET，小写字母n, p表示电子和空穴或n型衬底和p型衬底。需要特别强调的是，\textcolor{red}{\textbf{n沟道MOSFET为p型衬底，p沟道MOSFET为n型衬底}}，在初学时极易混淆。
     \end{tablenotes}
 \end{table}
 
@@ -192,6 +196,39 @@ MOSFET 有线性（linear）、饱和（saturation）和截止（cutoff）三种
 %%%
 \subsection{Threshold Voltage Effects}
 \subsubsection{Body Effect}
+通常情况下，衬底（或称为体）都是与源极相连且接地的，即 $V_[B] = V_[S]$。但是，如果衬底与源极不相连，而是与另一个电压源相连，那么衬底电压 $V_[B]$ 就会影响栅源电压 $V_[GS]$，从而影响晶体管的工作状态。这种现象称为\textbf{体效应（Body Effect）}。
+
+以NMOSFET为例，当衬底存在一个负电压 $V_[B]$ 时，相当于削弱了p型衬底，要达到强反型，栅源电压 $V_[GS]$ 需要增加才能使晶体管进入饱和区，从而阈值电压 $V_[TH]$ 也要相应地增加。
+\begin{equation}
+    V_[TH] = V_[TH0] + \gamma \left( \sqrt{|-2 \phi_[F] + V_[SB]|} - \sqrt{|-2 \phi_[F]|} \right)
+\end{equation}
+其中 $V_[TH0]$ 为 $V_[SB]=0$ 时的阈值电压，$\phi_[F]$ 为费米势，$\gamma$ 为体效应系数，$V_[SB]$ 为衬底与源之间的电压。\\
+费米势 $\phi_[F]$ 的定义为费米能级与本征费米能级的能量差，即
+\begin{equation}
+    \phi_[F]
+    = E_[F] - E_[Fi] 
+    = \begin{dcases}
+        \begin{aligned}
+            & -\dfrac{kT}{q}\ln{\dfrac{N_[A]}{n_[i]}}, && \text{NMOSFET, p型衬底} \\
+            & \dfrac{kT}{q}\ln{\dfrac{N_[D]}{n_[i]}}, && \text{PMOSFET, n型衬底}
+        \end{aligned}
+    \end{dcases}
+\end{equation}
+体效应系数 $\gamma$ 反映了衬底电压对阈值电压的影响程度，其值与衬底掺杂浓度 $N_[A]$ 或 $N_[D]$ 有关，计算公式为
+\begin{equation}
+    \gamma =
+    \begin{dcases}
+        \begin{aligned}
+            & \dfrac{\sqrt{2q\varepsilon_[Si]N_[A]}}{C_[ox]}, && \text{NMOSFET, p型衬底} \\
+            & -\dfrac{\sqrt{2q\varepsilon_[Si]N_[D]}}{C_[ox]}, && \text{PMOSFET, n型衬底}
+        \end{aligned}
+    \end{dcases}
+\end{equation}
+如果对符号感到困惑，请注意
+\begin{itemize}
+    \item 对于 NMOSFET，费米势 $\phi_[F]$ 为负，衬底偏置 $V_[SB]$ 通常为正，$V_[TH]$ 也为正，且 $\Delta V_[TH] > 0$。
+    \item 对于 PMOSFET，费米势 $\phi_[F]$ 为正，衬底偏置 $V_[SB]$ 通常为负，$V_[TH]$ 也为负，且 $\Delta V_[TH] < 0$。
+\end{itemize}
 
 \subsubsection{Drain-Induced Barrier Lowering}
 
@@ -463,3 +500,33 @@ MOSFET 的电容可以概括为栅、漏、源、体四个 terminal 之间的电
         C_[DB] &= C_[bottom,DB] + C_[sw,DB] = C_[jbd]\cdot\mathrm{AD} + C_[jbdsw] \cdot \mathrm{PD} + C_[jbdswg] \cdot W
     \end{aligned}
 \end{equation}
+
+%%%
+\section{MOSFET Small Signal Model}
+
+小信号模型是指在某一工作点附近，将非线性的电路元件用线性的电路元件来近似表示的模型，是一种一阶的近似。
+
+首先回顾一下一端口电路的等效。对于一个线性含源一端口电阻电路，可以进行戴维宁等效（Thevenin Equivalent）或诺顿等效（Norton Equivalent）的转换，如图 \ref{fig:thevenin-norton-equivalent} 所示。
+\begin{figure}[!htb]
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[]{thevenin.pdf}
+        \caption{戴维宁等效}
+    \end{subfigure}
+    \begin{subfigure}[b]{\linewidth}
+        \centering
+        \includegraphics[]{norton.pdf}
+        \caption{诺顿等效}
+    \end{subfigure}
+    \caption{戴维宁等效与诺顿等效}
+    \label{fig:thevenin-norton-equivalent}
+\end{figure}
+
+在戴维宁等效中，$V_[OC]$为开路电压，$R_[o]$为将N内所有的独立源置零后两端钮间的等效电阻。在诺顿等效中，$I_[SC]$为短路电流，$R_[o]$同样为两端钮间的等效电阻。
+它们具有关系$V_[OC] = I_[SC] \cdot R_[o]$。
+
+在许多模拟电路中，MOSFETs 工作在饱和区，故我们导出相应的小信号模型。
+\begin{hint}
+    小信号模型是定义在\textbf{饱和区}的，使用小信号模型时，需要先判断 MOSFET 的工作状态。
+\end{hint}
