@@ -1,6 +1,6 @@
 \chapter[MOSFET]{Metal-Oxide-Semiconductor \\ Field-Effect Transistor}
 
-本章使用的符号如表 \ref{tab:mosfet-symbols} 所示。
+本章使用的部分符号如表 \ref{tab:mosfet-symbols} 所示。
 
 \begin{table}[!htb]
     \centering
@@ -9,22 +9,23 @@
     \begin{NiceTabular}{cccc}
         \Xhline{1pt}
         \textbf{Symbol} & \textbf{Meaning} & \textbf{Unit} & \textbf{Polarity} \\ \hline
-        $V_[TH]$ & 阈值电压(Threshold voltage) & $\unit{\volt}$ & n$+$, p$-$ \\
-        $V_[DS]$ & 漏源电压(Drain-source voltage) & $\unit{\volt}$ & n$+$, p$-$ \\
-        $V_[GS]$ & 栅源电压(Gate-source voltage) & $\unit{\volt}$ & n$+$, p$-$ \\
-        $I_[D]$ & 漏电流(Drain current) & $\unit{\ampere}$ & n$+$, p$-$ \\
-        $I_[DS]$ & 漏源电流(Drain-source current) & $\unit{\ampere}$ & n$+$, p$-$ \\
-        $W$ & 沟道宽度(Channel width) & $\unit{\meter}$ & $+$ \\
-        $L$ & 沟道长度(Channel length) & $\unit{\meter}$ & $+$ \\
-        $\varepsilon_[ox]$ & 氧化层介电常数(Oxide permittivity) & $\unit{\farad \per \meter}$ & $+$\tabularnote{For $\rm{SiO_2}$, $\varepsilon_[ox] = 3.9 \varepsilon_0 = \qty{3.5e-11}{\farad \per \meter}$} \\
-        $t_[ox]$ & 氧化层厚度(Oxide thickness) & $\unit{\meter}$ & $+$ \\
-        $C_[ox]$ & 单位面积氧化层电容(Oxide capacitance) & $\unit{\farad \per \meter \squared}$ & $+$ \\
-        $\mu_[n]$/$\mu_[p]$ & 电子/空穴迁移率(mobility) & $\unit{\meter \squared \per \volt \per \second}$ & $+$ \\
-        $k_[n]$/$k_[p]$ & 增益因子(Gain Factor) & $\unit{\ampere \meter \squared \per \volt \squared}$ & n$+$, p$-$ \\
-        $k'_[n]$/$k'_[p]$ & 工艺跨导(Transconductance) & $\unit{\ampere \meter \squared \per \volt \squared}$ & n$+$, p$-$ \\
-        $V_[DSAT]$ & 速度饱和电压(Velocity saturation voltage) & $\unit{\volt}$ & n$+$, p$-$ \\
-        $\lambda$ & 沟道长度调制系数(Channel length modulation coefficient) & $\unit{\volt \tothe{-1}}$ & n$+$, p$-$ \\
-        $x_[d]$ & 横向扩散距离(Lateral diffusion distance) & $\unit{\meter}$ & $+$ \\
+        $V_[TH]$ & 阈值电压(Threshold voltage) & $\unit{\volt}$ & n+, p- \\
+        $V_[DS]$ & 漏源电压(Drain-source voltage) & $\unit{\volt}$ & n+, p- \\
+        $V_[GS]$ & 栅源电压(Gate-source voltage) & $\unit{\volt}$ & n+, p- \\
+        $I_[D]$ & 漏电流(Drain current) & $\unit{\ampere}$ & n+, p- \\
+        $I_[DS]$ & 漏源电流(Drain-source current) & $\unit{\ampere}$ & n+, p- \\
+        $W$ & 沟道宽度(Channel width) & $\unit{\meter}$ & + \\
+        $L$ & 沟道长度(Channel length) & $\unit{\meter}$ & + \\
+        $\varepsilon_[ox]$ & 氧化层介电常数(Oxide permittivity) & $\unit{\farad \per \meter}$ & +\tabularnote{For $\rm{SiO_2}$, $\varepsilon_[ox] = 3.9 \varepsilon_0 = \qty{3.5e-11}{\farad \per \meter}$} \\
+        $t_[ox]$ & 氧化层厚度(Oxide thickness) & $\unit{\meter}$ & + \\
+        $C_[ox]$ & 单位面积氧化层电容(Oxide capacitance) & $\unit{\farad \per \meter \squared}$ & + \\
+        $C_[o]$ & 单位晶体管宽度覆盖电容(Overlap cap per unit transistor width) & $\unit{\farad \per \meter}$ & + \\
+        $\mu_[n]$/$\mu_[p]$ & 电子/空穴迁移率(mobility) & $\unit{\meter \squared \per \volt \per \second}$ & + \\
+        $k_[n]$/$k_[p]$ & 增益因子(Gain Factor) & $\unit{\ampere \meter \squared \per \volt \squared}$ & n+, p- \\
+        $k'_[n]$/$k'_[p]$ & 工艺跨导(Transconductance) & $\unit{\ampere \meter \squared \per \volt \squared}$ & n+, p- \\
+        $V_[DSAT]$ & 速度饱和电压(Velocity saturation voltage) & $\unit{\volt}$ & n+, p- \\
+        $\lambda$ & 沟道长度调制系数(Channel length modulation coefficient) & $\unit{\volt \tothe{-1}}$ & n+, p- \\
+        $x_[d]$ & 横向扩散距离(Lateral diffusion distance) & $\unit{\meter}$ & + \\
         \Xhline{1pt}
     \end{NiceTabular}
     \begin{tablenotes}
@@ -228,7 +229,7 @@ PMOSFET 的 I-V 特性为
 
 \begin{figure}[!hbt]
     \centering
-    \includegraphics[width=0.5\textwidth]{nmos_iv_regions.png}
+    \includegraphics[width=0.6\textwidth]{nmos_iv_regions.pdf}
     \caption{NMOSFET 的 工作状态}
     \label{fig:nmos_iv_regions}
 \end{figure}
@@ -247,17 +248,17 @@ MOSFET 的电容可以概括为栅、漏、源、体四个 terminal 之间的电
 
 电容的来源可以分为以下三部分：
 \begin{itemize}
-    \item 结构电容（MOS structure capacitances）：结构电容是由于 MOS 结构的特性而产生的电容。结构电容的大小与 MOS 结构的面积、厚度、介电常数有关。
+    \item \textbf{结构电容（MOS structure capacitances）}：结构电容是由于 MOS 结构的特性而产生的电容。结构电容的大小与 MOS 结构的面积、厚度、介电常数有关。
     \begin{itemize}
         \item 覆盖电容（Overlap Capacitance）：$C_[overlap] = C_[GSO] + C_[GDO]$。覆盖电容是由源和漏在氧化层下延展的横向扩散所引起的栅和源漏间的寄生电容。
     \end{itemize}
-    \item 栅至沟道的电容（Gate-to-channel Capacitance）：$C_[GC] = C_[GCB] + C_[GCS] + C_[GCD]$。沟道电容取决于晶体管的工作区间，产生晶体管工作所需的沟道电荷。
+    \item \textbf{栅至沟道的电容（Gate-to-channel Capacitance）}：$C_[GC] = C_[GCB] + C_[GCS] + C_[GCD]$。沟道电容取决于晶体管的工作区间，产生晶体管工作所需的沟道电荷。
     \begin{itemize}
         \item 栅体沟道电容（Gate-Body Channel Capacitance）：$C_[GCB]$。
         \item 栅源沟道电容（Gate-Source Channel Capacitance）：$C_[GCS]$。
         \item 栅漏沟道电容（Gate-Drain Channel Capacitance）：$C_[GCD]$。
     \end{itemize}
-    \item 扩散电容/结电容（Juction/Diffusion Capacitance）：$C_[diff] = C_[Sdiff] + C_[Ddiff]$。扩散电容/结电容是扩散区处于反向偏置的源体、漏体间的pn结引起的电容。
+    \item \textbf{扩散电容/结电容（Juction/Diffusion Capacitance）}：$C_[diff] = C_[Sdiff] + C_[Ddiff]$。扩散电容/结电容是扩散区处于反向偏置的源体、漏体间的pn结引起的电容。
     \begin{itemize}
         \item 源扩散电容（Source Diffusion Capacitance）：$C_[Sdiff]$。
         \item 漏扩散电容（Drain Diffusion Capacitance）：$C_[Ddiff]$。
@@ -285,27 +286,52 @@ MOSFET 的电容可以概括为栅、漏、源、体四个 terminal 之间的电
     \centering
     \caption{MOSFET 电容符号表}
     \label{tab:mosfet-capacitance-symbols}
+    \scalebox{0.82}{ % 缩放表格
     \begin{NiceTabular}{cccc}
         \Xhline{1pt}
         \textbf{Symbol} & \textbf{Meaning} & \textbf{Unit} & \textbf{Polarity} \\ \hline
-        $C_[ox]$ & 单位面积栅氧电容(Gate Oxide Capacitance per unit area) & $\unit{\farad \per \meter \squared}$ & $+$ \\
-        $C_[overlap]$ & 总覆盖电容(Overlap capacitance) & $\unit{\farad}$ & $+$ \\
-        $C_[GSO]$ & 栅源间覆盖电容(Gate-source overlap capacitance) & $\unit{\farad}$ & $+$ \\
-        $C_[GDO]$ & 栅漏间覆盖电容(Gate-drain overlap capacitance) & $\unit{\farad}$ & $+$ \\
-        $C_[o]$ & 单位晶体管宽度覆盖电容(Overlap capacitance per unit transistor width) & $\unit{\farad \per \meter}$ & $+$ \\
-        $x_[d]$ & 横向扩散距离(Lateral diffusion distance) & $\unit{\meter}$ & $+$ \\
-        $C_[GC]$ & 栅沟道电容(Gate-channel capacitance) & $\unit{\farad}$ & $+$ \\
-        $C_[GCB]$ & 栅体沟道电容(Gate-body channel capacitance) & $\unit{\farad}$ & $+$ \\
-        $C_[GCS]$ & 栅源沟道电容(Gate-source channel capacitance) & $\unit{\farad}$ & $+$ \\
-        $C_[GCD]$ & 栅漏沟道电容(Gate-drain channel capacitance) & $\unit{\farad}$ & $+$ \\
+        $C_[GS]$ & 栅源电容(Gate-Source capacitance) & $\unit{\farad}$ & + \\
+        $C_[GB]$ & 栅体电容(Gate-Body capacitance) & $\unit{\farad}$ & + \\
+        $C_[GD]$ & 栅漏电容(Gate-Drain capacitance) & $\unit{\farad}$ & + \\
+        $C_[SB]$ & 源体电容(Source-Body capacitance) & $\unit{\farad}$ & + \\
+        $C_[DB]$ & 漏体电容(Drain-Body capacitance) & $\unit{\farad}$ & + \\
+        $C_[ox]$ & 单位面积栅氧电容(Gate Oxide Capacitance per unit area) & $\unit{\farad \per \meter \squared}$ & + \\
+        $C_[overlap]$ & 总覆盖电容(Overlap capacitance) & $\unit{\farad}$ & + \\
+        $C_[GSO]$ & 栅源间覆盖电容(Gate-Source Overlap capacitance) & $\unit{\farad}$ & + \\
+        $C_[GDO]$ & 栅漏间覆盖电容(Gate-Drain Overlap capacitance) & $\unit{\farad}$ & + \\
+        $C_[o]$ & 单位晶体管宽度覆盖电容(Overlap capacitance per unit transistor width) & $\unit{\farad \per \meter}$ & + \\
+        $x_[d]$ & 横向扩散距离(Lateral diffusion distance) & $\unit{\meter}$ & + \\
+        $C_[GC]$ & 栅沟道电容(Gate-Channel capacitance) & $\unit{\farad}$ & + \\
+        $C_[GCB]$ & 栅体沟道电容(Gate-Body Channel capacitance) & $\unit{\farad}$ & + \\
+        $C_[GCS]$ & 栅源沟道电容(Gate-Source Channel capacitance) & $\unit{\farad}$ & + \\
+        $C_[GCD]$ & 栅漏沟道电容(Gate-Drain Channel capacitance) & $\unit{\farad}$ & + \\
+        $C_[Sdiff]$ & 源扩散电容(Source Diffusion Capacitance) & $\unit{\farad}$ & + \\
+        $C_[Ddiff]$ & 漏扩散电容(Drain Diffusion Capacitance) & $\unit{\farad}$ & + \\
+        $C_[bottom]$ & 底板电容(Bottom-plate capacitance) & $\unit{\farad}$ & + \\
+        $C_[sw]$ & 侧壁电容(SideWall capacitance) & $\unit{\farad}$ & + \\
+        $C_[J]$ & 零偏单位面积底板电容(Zero-bias bottom-plate capacitance per unit area) & $\unit{\farad \per \meter \squared}$ & + \\
+        $C_[JSW]$ & 零偏单位面积侧壁电容(Zero-bias side-wall capacitance per unit area) & $\unit{\farad \per \meter \squared}$ & + \\
+        $C_[jbs]$ & 体源单位面积结电容(Body-to-Source bottom-plate junction cap per unit area) & $\unit{\farad \per \meter \squared}$ & + \\
+        $C_[jbd]$ & 体漏单位面积结电容(Body-to-Drain bottom-plate junction cap per unit area) & $\unit{\farad \per \meter \squared}$ & + \\
+        AS & 源区底板面积(Area of bottom plate in Source region) & $\unit{\meter \squared}$ & + \\
+        AD & 漏区底板面积(Area of bottom plate in Drain region) & $\unit{\meter \squared}$ & + \\
+        $\psi_0$ & 内建电势(Built-in potential) & $\unit{\volt}$ & + \\
+        $C_[jbssw]$ & 体源侧壁单位面积结电容(Body-to-Source side-wall junction cap per unit area) & $\unit{\farad \per \meter \squared}$ & + \\
+        $C_[jbdsw]$ & 体漏侧壁单位面积结电容(Body-to-Drain side-wall junction cap per unit area) & $\unit{\farad \per \meter \squared}$ & + \\
+        $C_[jbsswg]$ & 单位宽度的面向沟道源侧壁电容(Source beside Gate side-wall junction cap per unit perimeter) & $\unit{\farad \per \meter}$ & + \\
+        $C_[jbdswg]$ & 单位宽度的面向沟道漏侧壁电容(Drain beside Gate side-wall junction cap per unit perimeter) & $\unit{\farad \per \meter}$ & + \\
+        $M_[J]$ & 底板结电容结缓变系数(Bottom-plate junction capacitance grading coefficient) & 1 & + \\
+        $M_[JSW]$ & 侧壁结电容结缓变系数(Side-wall junction capacitance grading coefficient) & 1 & + \\
+        $M_[JSWG]$ & 沟道侧壁结电容结缓变系数(Gate side-wall junction capacitance grading coefficient) & 1 & + \\
         \Xhline{1pt}
     \end{NiceTabular}
+    }
 \end{table}
 
 
 %%%%
 \subsection{Gate Capacitance}
-栅电容可以进一步分为两部分：覆盖电容$C_[overlap]$和沟道电容$C_[GC]$。
+栅电容可以进一步分为两部分：\textbf{覆盖电容$C_[overlap]$}和\textbf{沟道电容$C_[GC]$}。
 \subsubsection{Structure Capacitance — Overlap Capacitance}
 当通过扩散形成源区和漏区时，理想中，源和漏的扩散应当恰好终止在栅氧的边界上，但是，实际情况是，源和漏的边界都会往栅氧下延伸$x_[d]$的距离，这被称为横向扩散，这就导致了栅氧覆盖了一定面积的源区和漏区，从而形成了栅和源漏间的\textbf{覆盖电容（Overlap Capacitance）}，如图 \ref{fig:overlap_capacitance} 所示。
 \begin{figure}[!htb]
@@ -341,7 +367,7 @@ MOSFET 的电容可以概括为栅、漏、源、体四个 terminal 之间的电
 \end{table}
 
 三种工作状态下的沟道电容如图 \ref{fig:gate2channel-capacitance} 所示。
-\begin{figure}[hbp]
+\begin{figure}[!htb]
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
@@ -379,4 +405,61 @@ MOSFET 的电容可以概括为栅、漏、源、体四个 terminal 之间的电
 \end{table}
 
 \subsection{Junction/Diffusion Capacitance}
-扩散电容/结电容是扩散区处于反向偏置的源体、漏体间的pn结引起的电容。可分为源扩散电容$C_[SB]/C_[Sdiff]$和漏扩散电容$C_[DB]/C_[Ddiff]$两部分。
+扩散电容/结电容是扩散区处于反向偏置的源体、漏体间的pn结引起的电容。可分为源扩散电容$C_[SB]/C_[Sdiff]$和漏扩散电容$C_[DB]/C_[Ddiff]$两部分。如图 \ref{fig:diffusion-capacitance} 所示。
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.7\textwidth]{MOS_diffusion_cap.pdf}
+    \caption{扩散电容/结电容}
+    \label{fig:diffusion-capacitance}
+\end{figure}
+
+扩散电容的计算分为两部分，\textbf{底板电容$C_[bottom]$}（Bottom Plate Capacitance）和\textbf{侧壁电容$C_[sw]$（Side Wall Capacitance）}。
+
+底板电容是源和漏底部与衬底之间的结电容，其计算公式为
+\begin{equation}
+    \begin{aligned}
+        C_[bottom,SB] &= C_[jbs]\cdot\mathrm{AS} \\
+        C_[bottom,DB] &= C_[jbd]\cdot\mathrm{AD}
+    \end{aligned}
+\end{equation}
+其中$\mathrm{AS} = L_[S]W$是源区底板的面积，$\mathrm{AD} = L_[D]W$是漏区底板的面积（A表示Area）。而$C_[jbs]$是单位面积的体到源结电容，$C_[jbd]$是单位面积的体到漏结电容。
+在SPICE模型中，它们的值由式 \ref{eq:bottom-plate-capacitance} 给出
+\begin{equation}
+    \begin{aligned}
+        C_[jbs] &= C_[J] \left(1 + \dfrac{V_[SB]}{\psi_0}\right)^{-M_[J]} \\
+        C_[jbd] &= C_[J] \left(1 + \dfrac{V_[DB]}{\psi_0}\right)^{-M_[J]}
+    \end{aligned}
+    \label{eq:bottom-plate-capacitance}
+\end{equation}
+其中$C_[J]$是零偏时单位面积的底板电容，$\psi_[0]$是体-源/漏结的内建电势\footnote{$\psi_{0} = \dfrac{kT}{q}\ln\left(\dfrac{N_[D]N_[A]}{n_[i]^2}\right)$}，$M_[J]$是结电容的调制系数（约0.5）。
+
+侧壁电容是源和漏侧壁与衬底之间的结电容。由于工艺原因，沿非导电沟道的侧壁电容往往很小，而面向沟道的侧壁电容则更大。因此，侧壁电容的计算公式为
+\vspace{1em}
+\begin{equation}
+    \begin{aligned}
+        C_[sw,SB] &= \eqnmarkbox[blue]{node1}{C_[jbssw] \cdot \mathrm{PS}} + \eqnmarkbox[red]{node2}{C_[jbsswg] \cdot W} \\
+        C_[sw,DB] &= C_[jbdsw] \cdot \mathrm{PD} + C_[jbdswg] \cdot W
+    \end{aligned}
+    \annotate[yshift=0.5em]{left}{node1}{非导电沟道的侧壁电容}
+    \annotate[yshift=0.5em]{right}{node2}{面向沟道的侧壁电容}
+\end{equation}
+其中$\mathrm{PS} = 2L_[S] + W$是源区侧壁的周长，$\mathrm{PD} = 2L_[D] + W$是漏区侧壁的周长（P表示Perimeter）。而$C_[jbssw]$是单位周长的源侧壁电容，$C_[jbdsw]$是单位周长的漏侧壁电容，$C_[jbsswg]$是单位宽度的面向沟道源侧壁电容，$C_[jbdswg]$是单位宽度的面向沟道漏侧壁电容。
+在SPICE模型中，它们的值由式 \ref{eq:side-wall-capacitance} 给出
+\begin{equation}
+    \begin{aligned}
+        C_[jbssw] &= C_[JSW] \left(1 + \dfrac{V_[SB]}{\psi_0}\right)^{-M_[JSW]} \\
+        C_[jbdsw] &= C_[JSW] \left(1 + \dfrac{V_[DB]}{\psi_0}\right)^{-M_[JSW]} \\
+        C_[jbsswg] &= C_[JSW] \left(1 + \dfrac{V_[SB]}{\psi_0}\right)^{-M_[JSWG]} \\
+        C_[jbdswg] &= C_[JSW] \left(1 + \dfrac{V_[DB]}{\psi_0}\right)^{-M_[JSWG]}
+    \end{aligned}
+    \label{eq:side-wall-capacitance}
+\end{equation}
+其中$C_[JSW]$是零偏时单位周长的侧壁电容，$M_[JSW]$是侧壁电容的调制系数（约0.33），$M_[JSWG]$是面向沟道侧壁电容的调制系数（约0.33）。
+
+总结以上内容，扩散电容/结电容的计算公式为
+\begin{equation}
+    \begin{aligned}
+        C_[SB] &= C_[bottom,SB] + C_[sw,SB] = C_[jbs]\cdot\mathrm{AS} + C_[jbssw] \cdot \mathrm{PS} + C_[jbsswg] \cdot W \\
+        C_[DB] &= C_[bottom,DB] + C_[sw,DB] = C_[jbd]\cdot\mathrm{AD} + C_[jbdsw] \cdot \mathrm{PD} + C_[jbdswg] \cdot W
+    \end{aligned}
+\end{equation}
