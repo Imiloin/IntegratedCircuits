@@ -176,12 +176,19 @@ MOSFET 有线性（linear）、饱和（saturation）和截止（cutoff）三种
 假设$\Delta L / L$与$V_[DS]$为线性关系，满足
 \begin{equation}
     \frac{\Delta L}{L} = \lambda V_[DS]
+    \label{eq:channel_length_modulation_coefficient}
 \end{equation}
 其中 $\lambda$ 即为沟道长度调制系数。在饱和区，电流值需要乘上修正系数 $\left(1 + \lambda V_[DS]\right)$，即
 \begin{equation}
     I_[D] = \frac{1}{2} \mu_[n] C_[ox] \frac{W}{L} \left( V_[GS] - V_[TH] \right)^2 \eqnmark[RoyalPurple]{lb}{\left( 1 + \lambda V_[DS] \right)}
 \end{equation}
 需要注意，沟道长度调制仅在饱和区生效，只有在饱和区才会出现沟道长度的变化$\Delta L$。
+
+类似地，对于 PMOSFET，由于$V_[DS]<0$，考虑沟道长度调制后饱和区的电流为
+\begin{equation}
+    I_[D] = -\frac{1}{2} \mu_[p] C_[ox] \frac{W}{L} \left( V_[GS] - V_[TH] \right)^2 \eqnmark[RoyalPurple]{lb}{\left( 1 + \lambda V_[DS] \right)}
+\end{equation}
+注意，根据式 \ref{eq:channel_length_modulation_coefficient}，PMOSFET的 $\lambda$ 为负值。
 
 \begin{figure}
     \centering
@@ -199,13 +206,16 @@ MOSFET 有线性（linear）、饱和（saturation）和截止（cutoff）三种
 通常情况下，衬底（或称为体）都是与源极相连且接地的，即 $V_[B] = V_[S]$。但是，如果衬底与源极不相连，而是与另一个电压源相连，那么衬底电压 $V_[B]$ 就会影响栅源电压 $V_[GS]$，从而影响晶体管的工作状态。这种现象称为\textbf{体效应（Body Effect）}。
 
 以NMOSFET为例，当衬底存在一个负电压 $V_[B]$ 时，相当于削弱了p型衬底，要达到强反型，栅源电压 $V_[GS]$ 需要增加才能使晶体管进入饱和区，从而阈值电压 $V_[TH]$ 也要相应地增加。
+
+考虑体效应后，NMOSFET 的阈值电压 $V_[TH]$ 为
 \begin{equation}
     V_[TH] = V_[TH0] + \gamma \left( \sqrt{|-2 \phi_[F] + V_[SB]|} - \sqrt{|-2 \phi_[F]|} \right)
+    \label{eq:threshold_voltage_body_effect}
 \end{equation}
-其中 $V_[TH0]$ 为 $V_[SB]=0$ 时的阈值电压，$\phi_[F]$ 为费米势，$\gamma$ 为体效应系数，$V_[SB]$ 为衬底与源之间的电压。\\
+其中 $V_[TH0]$ 为 $V_[SB]=0$ 时的阈值电压，$\phi_[F]$ 为费米势，$\gamma$ 为体效应系数，$V_[SB]$ 为源与衬底之间的电压。\\
 费米势 $\phi_[F]$ 的定义为费米能级与本征费米能级的能量差，即
 \begin{equation}
-    \phi_[F]
+    \phi_[F]\footnote{在\cite{Analog-CMOS}中，使用的符号为$\varPhi_[F]=-\phi_[F]=E_[Fi]-E_[F]$，存在一个负号的差异。}
     = E_[F] - E_[Fi] 
     = \begin{dcases}
         \begin{aligned}
@@ -224,6 +234,13 @@ MOSFET 有线性（linear）、饱和（saturation）和截止（cutoff）三种
         \end{aligned}
     \end{dcases}
 \end{equation}
+NMOSFET 的阈值电压 $V_[TH]$ 受 $V_[BS]$（不是$V_[SB]$） 影响的情况如图 \ref{fig:threshold_voltage_body_effect} 所示。
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.6\textwidth]{threshold_voltage_body_effect.pdf}
+    \caption{NMOSFET 的体效应\cite{Modern-VLSI}}
+    \label{fig:threshold_voltage_body_effect}
+\end{figure}
 如果对符号感到困惑，请注意
 \begin{itemize}
     \item 对于 NMOSFET，费米势 $\phi_[F]$ 为负，衬底偏置 $V_[SB]$ 通常为正，$V_[TH]$ 也为正，且 $\Delta V_[TH] > 0$。
@@ -267,7 +284,7 @@ PMOSFET 的 I-V 特性为
 \begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.6\textwidth]{nmos_iv_regions.pdf}
-    \caption{NMOSFET 的 工作状态}
+    \caption{NMOSFET 的工作状态}
     \label{fig:nmos_iv_regions}
 \end{figure}
 
@@ -505,7 +522,126 @@ MOSFET 的电容可以概括为栅、漏、源、体四个 terminal 之间的电
 \section{MOSFET Small Signal Model}
 
 小信号模型是指在某一工作点附近，将非线性的电路元件用线性的电路元件来近似表示的模型，是一种一阶的近似。
+在许多模拟电路中，MOSFETs 工作在饱和区，故我们导出相应的小信号模型。
+\begin{hint}
+    小信号模型是定义在\textbf{饱和区}的，使用小信号模型时，需要先确认 MOSFET 的工作状态。
+\end{hint}
 
+在饱和区，MOSFET 的电流表达式为
+\begin{equation}
+    I_[D] = \frac{1}{2} \mu_[n] C_[ox] \frac{W}{L} \left( \textcolor{deep-blue}{V_[GS]} - \textcolor{Teal}{V_[TH]} \right)^2 \left( 1 + \lambda \textcolor{deep-red}{V_[DS]} \right)
+\end{equation}
+可以看出，$I_[D]$ 受三个电压 $V_[GS]$、$V_[TH]$ 和 $V_[DS]$ 调控。由式 \ref{eq:threshold_voltage_body_effect} 可知，$V_[TH]$ 又受 $V_[SB](V_[BS])$ 调控。因此，我们可以把 $I_[D]$ 看作是 $V_[GS]$、$V_[BS]$ 和 $V_[DS]$ 的函数，即
+\begin{equation}
+    I_[D] = f \left( \textcolor{deep-blue}{V_[GS]}, \textcolor{Olive}{V_[BS]}, \textcolor{deep-red}{V_[DS]} \right)
+\end{equation}
+
+求取全微分，得
+\begin{equation}
+    \mathrm{d} I_[D] = \frac{\partial I_[D]}{\partial V_[GS]} \mathrm{d} V_[GS] + \frac{\partial I_[D]}{\partial V_[BS]} \mathrm{d} V_[BS] + \frac{\partial I_[D]}{\partial V_[DS]} \mathrm{d} V_[DS]
+\end{equation}
+即
+\begin{equation}
+    \begin{aligned}
+        i_[d] &= \textcolor{deep-blue}{\frac{\partial I_[D]}{\partial V_[GS]}} v_[gs] + \textcolor{Olive}{\frac{\partial I_[D]}{\partial V_[BS]}} v_[bs] + \textcolor{deep-red}{\frac{\partial I_[D]}{\partial V_[DS]}} v_[ds] \\
+        &= \textcolor{deep-blue}{g_[m]} v_[gs] + \textcolor{Olive}{g_[mb]} v_[bs] + \textcolor{deep-red}{\frac{1}{r_[O]}} v_[ds]
+    \end{aligned}
+\end{equation}
+其中 $\bm{\textcolor{deep-blue}{g_[m]}}$ 为\textbf{跨导（Transconductance）}，$\bm{\textcolor{Olive}{g_[mb]}}$ 为\textbf{体效应跨导（Bulk transconductance）}，$\bm{\textcolor{deep-red}{r_[O]}}$ 为\textbf{输出电阻（Output resistance）}。
+下面分别求取 nMOSFET 的这三个参数。
+
+跨导 $g_[m]$ 反映了输出电流 $I_[D]$ 对输入电压 $V_[GS]$ 的敏感程度（转移特性），即
+\begin{equation}
+    g_[m] = \frac{\partial I_[D]}{\partial V_[GS]} = \mu_[n] C_[ox] \frac{W}{L} \left( V_[GS] - V_[TH] \right) \left( 1 + \lambda V_[DS] \right)
+\end{equation}
+$g_[m]$ 还有一些常用的等价表达式，
+\begin{equation}
+    g_[m] 
+    = \mu_[n] C_[ox] \frac{W}{L} \left( V_[GS] - V_[TH] \right) \left( 1 + \lambda V_[DS] \right)
+    = \frac{2 I_[D]}{V_[GS] - V_[TH]}
+    = \sqrt{2 \mu_[n] C_[ox] \frac{W}{L}I_[D] \left( 1 + \lambda V_[DS] \right)}
+\end{equation}
+为了简化计算，有时可以忽略沟道调制项，即
+\begin{equation}
+    \tikzset{annotate equations/arrow/.style={color=Black, >=latex'}}
+    \tikzset{annotate equations/text/.style={font=\eqnannotationfont,color=WildStrawberry}}
+    \begin{aligned}
+        g_[m] 
+        &= \eqnmarkbox[green]{B1}{\mu_[n] C_[ox] \frac{W}{L}} \eqnmarkbox[blue]{C1}{\left( V_[GS] - V_[TH] \right)}
+        &&= \frac{\eqnmarkbox[red]{A2}{2 I_[D]}}{\eqnmarkbox[blue]{C2}{V_[GS] - V_[TH]}}
+        &&= \sqrt{\eqnmarkbox[green]{B3}{\mu_[n] C_[ox] \frac{W}{L}} \cdot \eqnmarkbox[red]{A3}{2 I_[D]}} \\
+        &= \textcolor{green}{B} \times \textcolor{blue}{C}
+        &&= \frac{\textcolor{red}{A}}{\textcolor{blue}{C}}
+        &&= \sqrt{\textcolor{green}{B} \cdot \textcolor{red}{A}}
+    \end{aligned}
+\end{equation}
+
+体效应跨导 $g_[mb]$ 反映了输出电流 $I_[D]$ 对衬底偏置 $V_[BS]$ 的敏感程度。根据式 \ref{eq:threshold_voltage_body_effect} 可知，nMOSFET $V_[TH]$ 与 $V_[SB]$ 的关系为
+\begin{equation}
+    V_[TH] = V_[TH0] + \gamma \left( \sqrt{-2 \phi_[F] + V_[SB]} - \sqrt{-2 \phi_[F]} \right)
+\end{equation}
+根据链式法则，有
+\begin{equation}
+    \begin{aligned}
+        g_[mb] 
+        &= \frac{\partial I_[D]}{\partial V_[BS]} \\
+        &= \frac{\partial I_[D]}{\partial V_[TH]} \frac{\partial V_[TH]}{\partial V_[BS]} \\
+        &= -\mu_[n] C_[ox] \frac{W}{L} \left( V_[GS] - V_[TH] \right) \left( 1 + \lambda V_[DS] \right) \frac{\partial V_[TH]}{-\partial V_[SB]} \\
+        &= \mu_[n] C_[ox] \frac{W}{L} \left( V_[GS] - V_[TH] \right) \left( 1 + \lambda V_[DS] \right) \frac{\gamma}{2\sqrt{-2 \phi_[F] + V_[SB]}} \\
+        &= g_[m] \frac{\gamma}{2\sqrt{-2 \phi_[F] + V_[SB]}} \\
+        &= \eta g_[m]
+    \end{aligned}
+\end{equation}
+式中 $\eta = g_[mb] / g_[m]$ ，典型值为 0.25。
+
+输出电阻 $r_[O]$ 反映了输出电流 $I_[D]$ 对输出电压 $V_[DS]$ 的敏感程度（输出特性），即
+\begin{equation}
+    \begin{aligned}
+        r_[O] 
+        &= \frac{\partial V_[DS]}{\partial I_[D]} \\
+        &= \frac{1}{\partial I_[D] / \partial V_[DS]} \\
+        &= \frac{1}{\dfrac{1}{2} \mu_[n] C_[ox] \dfrac{W}{L} \left( V_[GS] - V_[TH] \right)^2 \lambda} \\
+    \end{aligned}
+\end{equation}
+一般认为$\lambda V_[DS] \ll 1$，为了简化使输出电阻 $r_[O]$ 与 $V_[DS]$ 无关，可近似认为
+\begin{equation}
+    I_[D] = \dfrac{1}{2} \mu_[n] C_[ox] \dfrac{W}{L} \left( V_[GS] - V_[TH] \right)^2 \left( 1 + \lambda V_[DS] \right) = \dfrac{1}{2} \mu_[n] C_[ox] \dfrac{W}{L} \left( V_[GS] - V_[TH] \right)^2
+\end{equation}
+从而
+\begin{equation}
+    r_[O] \approx \frac{1}{\lambda I_[D]}
+\end{equation}
+
+对于 pMOSFET，其小信号模型与 nMOSFET 的小信号模型相似，只需要修改少量符号。同时，三个偏导参数同样为正数。
+\begin{itemize}
+    \item $\bm{g_{\mathrm{m}}}$。由于PMOSFET与NMOSFET的转移特性关于原点对称，一阶导数的正负号相同，PMOSFET的跨导也为正数。
+        \begin{equation}
+            g_[m] = -\mu_[p] C_[ox] \frac{W}{L} \left( V_[GS] - V_[TH] \right) \left( 1 + \lambda V_[DS] \right) > 0
+        \end{equation}
+    \item $\bm{g_{\mathrm{mb}}}$。由于PMOSFET与NMOSFET的$V_[TH] - (-V_[BS])$曲线关于原点对称，一阶导数的正负号相同，PMOSFET的体效应跨导也为正数。
+        \begin{equation}
+            g_[mb] = g_[m] \frac{-\gamma}{2\sqrt{2 \phi_[F] - V_[SB]}} = \eta g_[m] > 0
+        \end{equation}
+    \item $\bm{r_\mathrm{O}}$。由于PMOSFET与NMOSFET的输出特性关于原点对称，一阶导数的正负号相同，PMOSFET的输出电阻也为正数。
+        \begin{equation}
+            r_[O] = \frac{1}{-\dfrac{1}{2} \mu_[p] C_[ox] \dfrac{W}{L} \left( V_[GS] - V_[TH] \right)^2 \lambda} \approx \frac{1}{\lambda I_[D]} > 0
+        \end{equation}
+\end{itemize}
+
+nMOSFET和pMOSFET可以使用一套相同的小信号模型，如图 \ref{fig:mosfet-small-signal-model} 所示\footnote{图中的小信号值没有使用小写字母。在后续的分析中，很多时候也不作字母大小写的区分，从内容上应当可以自行判断。}。
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.7\textwidth]{MOS_small_signal_model.pdf}
+    \caption{MOSFET 的小信号模型\cite{Analog-CMOS}}
+    \label{fig:mosfet-small-signal-model}
+\end{figure}
+通常情况下我们不需要考虑体效应，在一般的分析中可以采用图 \ref{fig:mosfet-small-signal-model}(c) 所示的模型。为了简化运算，我们还可以忽略沟道长度调制效应，这样就可以使用图 \ref{fig:mosfet-small-signal-model}(a) 所示的简化模型。
+
+
+
+
+
+\newpage
 首先回顾一下一端口电路的等效。对于一个线性含源一端口电阻电路，可以进行戴维宁等效（Thevenin Equivalent）或诺顿等效（Norton Equivalent）的转换，如图 \ref{fig:thevenin-norton-equivalent} 所示。
 \begin{figure}[!htb]
     \centering
@@ -525,8 +661,3 @@ MOSFET 的电容可以概括为栅、漏、源、体四个 terminal 之间的电
 
 在戴维宁等效中，$V_[OC]$为开路电压，$R_[o]$为将N内所有的独立源置零后两端钮间的等效电阻。在诺顿等效中，$I_[SC]$为短路电流，$R_[o]$同样为两端钮间的等效电阻。
 它们具有关系$V_[OC] = I_[SC] \cdot R_[o]$。
-
-在许多模拟电路中，MOSFETs 工作在饱和区，故我们导出相应的小信号模型。
-\begin{hint}
-    小信号模型是定义在\textbf{饱和区}的，使用小信号模型时，需要先判断 MOSFET 的工作状态。
-\end{hint}
