@@ -30,6 +30,9 @@
         $V_[SB]$ & 衬底偏置电压(Substrate bias between Source and Body) & $\unit{\volt}$ & N+, P- \\
         $V_[TH0]$ & 零体效应阈值电压(Zero-body-effect threshold voltage) & $\unit{\volt}$ & N+, P- \\
         $\gamma$ & 体效应系数(Body-effect coefficient) & $\unit{\volt\tothe{\frac{1}{2}}}$ & N+, P-\\
+        $g_[m]$ & 跨导(Transconductance) & $\unit{\ampere \per \volt}$ & + \\
+        $g_[mb]$ & 体效应跨导(Body-effect transconductance) & $\unit{\ampere \per \volt}$ & + \\
+        $r_[O]$ & 输出电阻(Output resistance) & $\unit{\ohm}$ & + \\
         \Xhline{1pt}
     \end{NiceTabular}
     \begin{tablenotes}
@@ -190,7 +193,7 @@ MOSFET 有线性（linear）、饱和（saturation）和截止（cutoff）三种
 \end{equation}
 注意，根据式 \ref{eq:channel_length_modulation_coefficient}，PMOSFET的 $\lambda$ 为负值。
 
-\begin{figure}
+\begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.7\textwidth]{channel_length_modulation.pdf}
     \caption{沟道长度调制\cite{NeamenSemiconductor}}
@@ -234,7 +237,7 @@ MOSFET 有线性（linear）、饱和（saturation）和截止（cutoff）三种
         \end{aligned}
     \end{dcases}
 \end{equation}
-NMOSFET 的阈值电压 $V_[TH]$ 受 $V_[BS]$（不是$V_[SB]$） 影响的情况如图 \ref{fig:threshold_voltage_body_effect} 所示。
+NMOSFET 的阈值电压 $V_[TH]$ 受 $-V_[BS]$（$V_[SB]$） 影响的情况如图 \ref{fig:threshold_voltage_body_effect} 所示。
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=0.6\textwidth]{threshold_voltage_body_effect.pdf}
@@ -605,12 +608,13 @@ $g_[m]$ 还有一些常用的等价表达式，
 \end{equation}
 一般认为$\lambda V_[DS] \ll 1$，为了简化使输出电阻 $r_[O]$ 与 $V_[DS]$ 无关，可近似认为
 \begin{equation}
-    I_[D] = \dfrac{1}{2} \mu_[n] C_[ox] \dfrac{W}{L} \left( V_[GS] - V_[TH] \right)^2 \left( 1 + \lambda V_[DS] \right) = \dfrac{1}{2} \mu_[n] C_[ox] \dfrac{W}{L} \left( V_[GS] - V_[TH] \right)^2
+    I_[D] = \dfrac{1}{2} \mu_[n] C_[ox] \dfrac{W}{L} \left( V_[GS] - V_[TH] \right)^2 \left( 1 + \lambda V_[DS] \right) \approx \dfrac{1}{2} \mu_[n] C_[ox] \dfrac{W}{L} \left( V_[GS] - V_[TH] \right)^2
 \end{equation}
 从而
 \begin{equation}
     r_[O] \approx \frac{1}{\lambda I_[D]}
 \end{equation}
+有时候也将$1/r_[O]$记作漏导（Leakage Conductance）$g_[d]$。
 
 对于 pMOSFET，其小信号模型与 nMOSFET 的小信号模型相似，只需要修改少量符号。同时，三个偏导参数同样为正数。
 \begin{itemize}
@@ -636,28 +640,3 @@ nMOSFET和pMOSFET可以使用一套相同的小信号模型，如图 \ref{fig:mo
     \label{fig:mosfet-small-signal-model}
 \end{figure}
 通常情况下我们不需要考虑体效应，在一般的分析中可以采用图 \ref{fig:mosfet-small-signal-model}(c) 所示的模型。为了简化运算，我们还可以忽略沟道长度调制效应，这样就可以使用图 \ref{fig:mosfet-small-signal-model}(a) 所示的简化模型。
-
-
-
-
-
-\newpage
-首先回顾一下一端口电路的等效。对于一个线性含源一端口电阻电路，可以进行戴维宁等效（Thevenin Equivalent）或诺顿等效（Norton Equivalent）的转换，如图 \ref{fig:thevenin-norton-equivalent} 所示。
-\begin{figure}[!htb]
-    \centering
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \includegraphics[]{thevenin.pdf}
-        \caption{戴维宁等效}
-    \end{subfigure}
-    \begin{subfigure}[b]{\linewidth}
-        \centering
-        \includegraphics[]{norton.pdf}
-        \caption{诺顿等效}
-    \end{subfigure}
-    \caption{戴维宁等效与诺顿等效}
-    \label{fig:thevenin-norton-equivalent}
-\end{figure}
-
-在戴维宁等效中，$V_[OC]$为开路电压，$R_[o]$为将N内所有的独立源置零后两端钮间的等效电阻。在诺顿等效中，$I_[SC]$为短路电流，$R_[o]$同样为两端钮间的等效电阻。
-它们具有关系$V_[OC] = I_[SC] \cdot R_[o]$。
