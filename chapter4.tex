@@ -5,7 +5,7 @@
 从本章开始将进入模拟电路的部分。本章使用的符号如表 \ref{tab:chapter4-symbols} 所示。
 \begin{table}[!htb]
     \centering
-    \caption{Single-Stage Amplifiers Symbols}
+    \caption{单级放大电路符号表}
     \label{tab:chapter4-symbols}
     \begin{NiceTabular}{cccc}
         \Xhline{1pt}
@@ -23,6 +23,8 @@
         $A_[v]$ & 电压增益(Voltage gain/Gain) & 1 & $\diagdown$ \\
         $G_[m]$ & 跨导(Transconductance) & $\unit{\siemens}$ & $\diagdown$ \\
         $g$ & 转移电导(Transfer conductance) & $\unit{\siemens}$ & $\diagdown$ \\
+        $i_[x]$ & 测试电流(Test current) & $\unit{\ampere}$ & $\diagdown$ \\
+        $v_[x]$ & 测试电压(Test voltage) & $\unit{\volt}$ & $\diagdown$ \\
         \Xhline{1pt}
     \end{NiceTabular}
 \end{table}
@@ -37,7 +39,7 @@
         \includegraphics[]{thevenin.pdf}
         \caption{戴维宁等效}
     \end{subfigure}
-    \begin{subfigure}[b]{\linewidth}
+    \begin{subfigure}[b]{\textwidth}
         \centering
         \includegraphics[]{norton.pdf}
         \caption{诺顿等效}
@@ -77,7 +79,7 @@
 同时，\textcolor{red}{输入阻抗与输出阻抗之间\textbf{没有对称关系}}，它们是两个不同的概念。
 
 %%%%
-\subsection{Basic Amplifier Analysis Principles}
+\subsection{Basic Ideas of Analyzing Single-stage Amplifiers}
 在模拟集成电路设计中，各级放大电路一般都是基于 MOSFET 来实现的。而为了实现高的输入阻抗，一般又会采用\textbf{栅极作为输入端}。
 
 结合 MOSFET 的小信号模型（图 \ref{fig:mosfet-small-signal-model}），我们通常使用图 \ref{fig:amplifier-equivalent-circuit} 所示的等效电路来进行分析计算。
@@ -87,7 +89,7 @@
     \caption{放大电路等效电路}
     \label{fig:amplifier-equivalent-circuit}
 \end{figure}
-其中$g$为压控电流源（VCCS）的转移电导\footnote{转移电导$g$与放大电路的跨导$G_[m]$是两个不同的概念，转移电导是针对一个受控源而言的，而跨导是整个放大电路输出电流与输入电压的小信号比值。在JianJun Zhou的ppt中二者没有很好地区分，容易误解，在此指出。}，$Z_[out]$为输出阻抗，$Z_[load]$为负载阻抗，$v_[in]$为输入电压，$v_[out]$为输出电压。
+其中$g$为压控电流源（VCCS）的转移电导\footnote{转移电导$g$与放大电路的跨导$G_[m]$是两个不同的概念，转移电导是针对一个受控源而言的，而跨导是整个放大电路输出电流与输入电压的小信号比值。只有在负载$Z_[load]$为开路时两者才相等。在JianJun Zhou的ppt中二者没有很好地区分，容易误解，在此指出。}，$Z_[out]$为输出阻抗，$Z_[load]$为负载阻抗，$v_[in]$为输入电压，$v_[out]$为输出电压。
 
 注意图 \ref{fig:amplifier-equivalent-circuit} 中的输入端的等效电源是一个受控源而不是独立源，但这并不是误用诺顿等效。这个受控源的电流是$g v_[in]$，转移电导$g$是由电路的静态工作点（大信号）决定的，而输入电压$v_[in]$是由上一级电路决定的，因此这个受控源的电流实际不受这一级小信号放大电路本身的影响，相对于当前的小信号电路是独立的，是一个“独立源”。
 
@@ -108,6 +110,100 @@
 \end{itemize}
 这些特殊情况并不会在图中标出，需要我们自己去判断理解。
 
+在很多分析（尤其是练习题）中，我们只考虑一级放大电路，不关心前后级的连接。这时我们就不考虑输出端的负载阻抗$Z_[load]$，认为其接在开路上，$v_[out]$是一个悬空的端钮。
+这时我们对图 \ref{fig:amplifier-equivalent-circuit} 进行进一步化简，得到图 \ref{fig:amplifier-equivalent-circuit-simplified} 所示的等效电路。
+\begin{figure}[h!tb]
+    \centering
+    \includegraphics[]{amplifier-equivalent-circuit-simplified.pdf}
+    \caption{放大电路等效电路（负载为开路）}
+    \label{fig:amplifier-equivalent-circuit-simplified}
+\end{figure}
+其中$G_[m]$为跨导。当输出端的负载为开路时，这级放大电路的跨导$G_[m]$就等于图 \ref{fig:amplifier-equivalent-circuit} 中的转移电导$g$。
+此时增益$A_[v]$为
+\begin{equation}
+    A_[v] = \frac{v_[out]}{v_[in]} = -G_[m] Z_[out]
+    \label{eq:amplifier-gain-simplified}
+\end{equation}
+从式 \ref{eq:amplifier-gain-simplified} 中可以看出，要求出放大电路的增益，只需要求出跨导$G_[m]$和输出阻抗$Z_[out]$即可，如图 \ref{fig:get-gm-zout} 所示\footnote{为与\cite{Analog-CMOS}保持一致，此图中$i_[out]$, $i_[x]$方向与图 \ref{fig:amplifier-equivalent-circuit-simplified} 中不同，方向向左。这两种方向定义均可，但需要保持求取$G_[m]$的$i_[out]$方向与求取$Z_[out]$的$i_[x]$的方向一致，避免出现负号的差异。}。
+\begin{itemize}
+    \item \textbf{求取}$\bm{G_{\mathrm{m}}}$\textbf{时，将小信号输出电压}$\bm{v_{\mathrm{out}}}$\textbf{置零，并假设输出电流}$\bm{i_{\mathrm{out}}}$\textbf{存在}。$G_[m] = \eval{\dfrac{\partial I_[out]}{\partial V_[in]}}_{V_[out]=\text{const}}$。
+    \item \textbf{求取}$\bm{Z_{\mathrm{out}}}$\textbf{时，将小信号输入电压}$\bm{v_{\mathrm{in}}}$\textbf{置零，并假设在输出端接入测试电压源}$\bm{v_{\mathrm{x}}}$。$Z_[out] = \eval{\dfrac{\partial V_[out]}{\partial I_[out]}}_{V_[in]=\text{const}}$。
+\end{itemize}
+\begin{figure}[htp!]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[]{cal_gm.pdf}
+        \caption{求取$G_[m]$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[]{cal_zout.pdf}
+        \caption{求取$Z_[out]$}
+    \end{subfigure}
+    \caption{求取$G_[m]$和$Z_[out]$的等效电路图}
+    \label{fig:get-gm-zout}
+\end{figure}
+请牢记这两点，在后续的分析中会继续强化这种方法。需要注意的是，在\textcolor{deep-blue}{求取$G_[m]$和$Z_[out]$时}，我们都\textcolor{deep-blue}{假设} $v_[out]$处存在电流，这时的\textcolor{deep-blue}{负载不再为开路}，可以理解为分别接入了一个测试电流源$I_[x]$和测试电压源$V_[x]$。
+
 %%%%
 \subsection{``Common'' What?}
 在分析放大电路时，我们经常会遇到“共X放大电路”（Common Xxx）的概念，例如“共源放大电路”（Common Source Amplifier，CS Amplifier），“共栅放大电路”（Common Gate Amplifier，CG Amplifier），“共漏放大电路”（Common Drain Amplifier，CD Amplifier）等等。这里的“共”到底是什么意思呢？
+
+首先说明，“共X放大电路”是对于单个 MOSFET 而言的。一个 MOSFET 有3个可用的 terminal，是栅极（Gate），漏极（Drain）和源极（Source）。在单级放大电路中，我们通常将其中一个 terminal 作为输入端，另一个 terminal 作为输出端，剩余的一个 terminal 作为公共端（Common）。
+
+\textbf{公共端需要接地或接在一个直流电压上}，在小信号分析中接地。我们之前提到小信号分析中输入电压和输出电压都是相对于地的，正好就是相对于这个公共端而言的，这也就是“共”的含义，表明输入和输出电压的值的公共参考点。
+
+\begin{enumerate}
+    \item 共源级。显然公共端为源极。剩余两个 terminal，为了更大的输入阻抗，取栅极为输入端，漏极为输出端。图 \ref{fig:common-source-amplifier} 为一个典型的共源级放大电路。
+            \begin{figure}[htp!]
+                \centering
+                \includegraphics[]{common-source-amplifier.pdf}
+                \caption{共源级放大电路}
+                \label{fig:common-source-amplifier}
+            \end{figure}
+    \item 共漏级。显然公共端为漏极。剩余两个 terminal，为了更大的输入阻抗，取栅极为输入端，源极为输出端。图 \ref{fig:common-drain-amplifier} 为一个典型的共漏级放大电路。
+            \begin{figure}[htp!]
+                \centering
+                \includegraphics[]{common-drain-amplifier.pdf}
+                \caption{共漏级放大电路}
+                \label{fig:common-drain-amplifier}
+            \end{figure}
+    \item 共栅级。显然公共端为栅极。剩余两个 terminal，在实际应用中两种接法都有。图 \ref{fig:common-gate-amplifier} 展示了两种接法的共栅级放大电路。
+            \begin{figure}[htp!]
+                \centering
+                \begin{subfigure}[b]{0.48\textwidth}
+                    \centering
+                    \includegraphics[]{common-gate-amplifier-1.pdf}
+                    \caption{共栅级放大电路（漏极输入，输入电阻大）}
+                \end{subfigure}
+                \begin{subfigure}[b]{0.48\textwidth}
+                    \centering
+                    \includegraphics[]{common-gate-amplifier-2.pdf}
+                    \caption{共栅级放大电路（源极输入，输入电阻小）}
+                \end{subfigure}
+                \caption{共栅级放大电路}
+                \label{fig:common-gate-amplifier}
+            \end{figure}
+\end{enumerate}
+
+此外，对于存在多个 MOSFET 的放大电路，有时也会将其拆成2个进行命名，例如图 \ref{fig:CS-CG} 所示的“共源共栅级”（Common Source Common Gate Amplifier，CSCG Amplifier）。
+\begin{figure}[htp!]
+    \centering
+    \includegraphics[]{CS-CG.pdf}
+    \caption{共源共栅级放大电路}
+    \label{fig:CS-CG}
+\end{figure}
+其中 M1 为共源级，而 M2 为共栅级。
+
+%%%
+\section{Common-Source Stage}
+
+%%%
+\section{Common-Drain Stage / Source Follower}
+
+%%%
+\section{Common-Gate Stage}
+
+%%%
+\section{Cascode Stage}

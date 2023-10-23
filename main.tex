@@ -47,6 +47,7 @@
 \usepackage[bottom]{footmisc} % 强制脚注在页面底部
 \usepackage{float} % 图片位置，H选项
 \usepackage[subscript]{altsubsup} % X_[subsctipt] 自动使用 \text{subscript}，会强制启用 \text，不要与 \bm 等指令嵌套使用（仍可使用传统的\mathrm方法）
+\usepackage{physics}\AtBeginDocument{\RenewCommandCopy\qty\SI} % 物理学常用符号，提供\eval，同时避免与 siunitx 冲突
 
 
 \usepackage{annotate-equations} % 为公式添加注释

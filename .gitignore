@@ -1,6 +1,8 @@
 imgs_projs/
 .texpadtmp
 main.pdf
+IntegratedCircuits.code-workspace
+.vscode/
 *.aux
 *.out
 *.xml

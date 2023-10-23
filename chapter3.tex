@@ -21,8 +21,8 @@
         $C_[ox]$ & 单位面积氧化层电容(Oxide capacitance) & $\unit{\farad \per \meter \squared}$ & + \\
         $C_[o]$ & 单位晶体管宽度覆盖电容(Overlap cap per unit transistor width) & $\unit{\farad \per \meter}$ & + \\
         $\mu_[n]$/$\mu_[p]$ & 电子/空穴迁移率(mobility) & $\unit{\meter \squared \per \volt \per \second}$ & + \\
-        $k_[n]$/$k_[p]$ & 增益因子(Gain Factor) & $\unit{\ampere \meter \squared \per \volt \squared}$ & N+, P- \\
-        $k'_[n]$/$k'_[p]$ & 工艺跨导(Transconductance) & $\unit{\ampere \meter \squared \per \volt \squared}$ & N+, P- \\
+        $k_[n]$/$k_[p]$ & 增益因子(Gain Factor) & $\unit{\ampere \per \volt \squared}$ & N+, P- \\
+        $k'_[n]$/$k'_[p]$ & 工艺跨导(Transconductance) & $\unit{\ampere \per \volt \squared}$ & N+, P- \\
         $V_[DSAT]$ & 速度饱和电压(Velocity saturation voltage) & $\unit{\volt}$ & N+, P- \\
         $\lambda$ & 沟道长度调制系数(Channel length modulation coefficient) & $\unit{\volt \tothe{-1}}$ & N+, P- \\
         $x_[d]$ & 横向扩散距离(Lateral diffusion distance) & $\unit{\meter}$ & + \\
@@ -116,11 +116,12 @@ MOSFET 有线性（linear）、饱和（saturation）和截止（cutoff）三种
     \begin{dcases}  % 自动调整上下两行的高度, dfrac fix
         \begin{aligned}
             & 0 && V_[GS] > V_[TH] &&& \text{Cut-off} \\
-            & \mu_[p] C_[ox] \frac{W}{L} \left[ (V_[GS] - V_[TH]) V_[DS] - \frac{V_[DS]^2}{2} \right] && V_[GS] \leqslant V_[TH], V_[DS] \geqslant V_[GS] - V_[TH] &&& \text{Linear} \\
-            & \frac{1}{2} \mu_[p] C_[ox] \frac{W}{L} (V_[GS] - V_[TH])^2 && V_[GS] \leqslant V_[TH], V_[DS] < V_[GS] - V_[TH] &&& \text{Saturation}
+            & -\mu_[p] C_[ox] \frac{W}{L} \left[ (V_[GS] - V_[TH]) V_[DS] - \frac{V_[DS]^2}{2} \right] && V_[GS] \leqslant V_[TH], V_[DS] \geqslant V_[GS] - V_[TH] &&& \text{Linear} \\
+            & -\frac{1}{2} \mu_[p] C_[ox] \frac{W}{L} (V_[GS] - V_[TH])^2 && V_[GS] \leqslant V_[TH], V_[DS] < V_[GS] - V_[TH] &&& \text{Saturation}
         \end{aligned}
     \end{dcases}
 \end{equation}
+注意，为了保持方向的一致性，$I_[D]$一般指漏到源的电流，即$I_[DS]$。
 
 %%%
 \section{Nonideal I-V Effects}
@@ -431,12 +432,12 @@ MOSFET 的电容可以概括为栅、漏、源、体四个 terminal 之间的电
         \includegraphics[width=6cm]{C_GC_cutoff.pdf}
         \caption{截止区}
     \end{subfigure}
-    \begin{subfigure}[b]{0.4\linewidth}
+    \begin{subfigure}[b]{0.4\textwidth}
         \centering
         \includegraphics[width=6cm]{C_GC_linear.pdf}
         \caption{线性区}
     \end{subfigure}
-    \begin{subfigure}[b]{\linewidth}
+    \begin{subfigure}[b]{\textwidth}
         \centering
         \includegraphics[width=6cm]{C_GC_saturation.pdf}
         \caption{饱和区}
@@ -527,7 +528,7 @@ MOSFET 的电容可以概括为栅、漏、源、体四个 terminal 之间的电
 小信号模型是指在某一工作点附近，将非线性的电路元件用线性的电路元件来近似表示的模型，是一种一阶的近似。
 在许多模拟电路中，MOSFETs 工作在饱和区，故我们导出相应的小信号模型。
 \begin{hint}
-    小信号模型是定义在\textbf{饱和区}的，使用小信号模型时，需要先确认 MOSFET 的工作状态。
+    小信号模型是定义在\textbf{饱和区}的，使用小信号模型时，需要先确认 MOSFET 的工作状态。不在饱和区时，仍可使用小信号模型，但是$g_[m]$, $g_[mb]$和$r_[O]$的表达式会有不同，需要根据相应状态的$I_[D]$方程进行偏导。\footnote{例如，在线性区中$r_[O]$就不再是一个由沟道长度调制效应产生的很大的电阻，而是一个不能忽略的小电阻，从输出特性曲线（线性区斜率的倒数）中应当能看出这一点。}
 \end{hint}
 
 在饱和区，MOSFET 的电流表达式为
