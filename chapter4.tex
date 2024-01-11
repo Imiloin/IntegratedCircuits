@@ -126,8 +126,8 @@
 \end{equation}
 从式 \ref{eq:amplifier-gain-simplified} 中可以看出，要求出放大电路的增益，只需要求出跨导$G_[m]$和输出阻抗$Z_[out]$即可，如图 \ref{fig:get-gm-zout} 所示\footnote{为与\cite{Analog-CMOS}保持一致，此图中$i_[out]$, $i_[x]$方向与图 \ref{fig:amplifier-equivalent-circuit-simplified} 中不同，方向向左。这两种方向定义均可，但需要保持求取$G_[m]$的$i_[out]$方向与求取$Z_[out]$的$i_[x]$的方向一致，避免出现负号的差异。}。
 \begin{itemize}
-    \item \textbf{求取}$\bm{G_{\mathrm{m}}}$\textbf{时，将小信号输出电压}$\bm{v_{\mathrm{out}}}$\textbf{置零，并假设输出电流}$\bm{i_{\mathrm{out}}}$\textbf{存在}。$G_[m] = \eval{\dfrac{\partial I_[out]}{\partial V_[in]}}_{V_[out]=\text{const}}$。
-    \item \textbf{求取}$\bm{Z_{\mathrm{out}}}$\textbf{时，将小信号输入电压}$\bm{v_{\mathrm{in}}}$\textbf{置零，并假设在输出端接入测试电压源}$\bm{v_{\mathrm{x}}}$。$Z_[out] = \eval{\dfrac{\partial V_[out]}{\partial I_[out]}}_{V_[in]=\text{const}}$。
+    \item \textbf{求取}$\bm{G_{\mathrm{m}}}$\textbf{时，将小信号输出电压}$\bm{v_{\mathrm{out}}}$\textbf{置零，并假设输出电流}$\bm{i_{\mathrm{out}}}$\textbf{存在（此时}$\bm{Z_{\mathrm{out}}}$\textbf{上的电流为0）}。$G_[m] = \eval{({\partial I_[out]}/{\partial V_[in]})}_{V_[out]=\text{const}}$。
+    \item \textbf{求取}$\bm{Z_{\mathrm{out}}}$\textbf{时，将小信号输入电压}$\bm{v_{\mathrm{in}}}$\textbf{置零，并假设在输出端接入测试电压源}$\bm{v_{\mathrm{x}}}$\textbf{（此时受控源的电流为0）}。$Z_[out] = \eval{({\partial V_[out]}/{\partial I_[out]})}_{V_[in]=\text{const}}$。
 \end{itemize}
 \begin{figure}[htp!]
     \centering
@@ -148,7 +148,7 @@
 
 %%%%
 \subsection{``Common'' What?}
-在分析放大电路时，我们经常会遇到“共X放大电路”（Common Xxx）的概念，例如“共源放大电路”（Common Source Amplifier，CS Amplifier），“共栅放大电路”（Common Gate Amplifier，CG Amplifier），“共漏放大电路”（Common Drain Amplifier，CD Amplifier）等等。这里的“共”到底是什么意思呢？
+在分析放大电路时，我们经常会遇到“共X放大电路”（Common Xxx）的概念。这里的“共”到底是什么意思呢？
 
 首先说明，“共X放大电路”是对于单个 MOSFET 而言的。一个 MOSFET 有3个可用的 terminal，是栅极（Gate），漏极（Drain）和源极（Source）。在单级放大电路中，我们通常将其中一个 terminal 作为输入端，另一个 terminal 作为输出端，剩余的一个 terminal 作为公共端（Common）。
 
@@ -187,7 +187,7 @@
             \end{figure}
 \end{enumerate}
 
-此外，对于存在多个 MOSFET 的放大电路，有时也会将其拆成2个进行命名，例如图 \ref{fig:CS-CG} 所示的“共源共栅级”（Common Source Common Gate Amplifier，CSCG Amplifier）。
+此外，对于存在多个 MOSFET 的放大电路，有时也会将其拆开进行命名，例如图 \ref{fig:CS-CG} 所示的“共源共栅级”（Common Source Common Gate Amplifier，Cascode）。
 \begin{figure}[htp!]
     \centering
     \includegraphics[]{CS-CG.pdf}
