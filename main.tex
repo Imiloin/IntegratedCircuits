@@ -37,6 +37,7 @@
 \usetikzlibrary{braids}
 \usepackage{tqft}
 \usepackage{ytableau}
+\usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{threeparttable}	% 表格注释
 % \usepackage[inkscapearea=page]{svg}	% 插入 svg 图形
@@ -150,48 +151,48 @@
 %%%
 
 \begin{document}
-	\frontmatter	% 制作封面和目录.
-	% 注意: 为了简化, 本模板不含封面. 请通过文档类的参数进行设置.
-	
-	\mainmatter		% 正文开始：逐章引入 TeX 代码
+\frontmatter	% 制作封面和目录.
+% 注意: 为了简化, 本模板不含封面. 请通过文档类的参数进行设置.
 
-	\include{prelude}
+\mainmatter		% 正文开始：逐章引入 TeX 代码
 
-	% % % % % % % % % %
-	\part{Semicounductor Physics}
+\include{prelude}
 
-	\include{chapter1}
-	\include{chapter2}
+% % % % % % % % % %
+\part{Semicounductor Physics}
 
-	% % % % % % % % % %
-	\part{Semicounductor Devices}
-	\include{chapter3}
+\include{chapter1}
+\include{chapter2}
 
-	% % % % % % % % % %
-	\part{Analog Integrated Circuits}
-	\include{chapter4}
+% % % % % % % % % %
+\part{Semicounductor Devices}
+\include{chapter3}
 
-	% % % % % % % % % %
-	\part{Digital Integrated Circuits}
+% % % % % % % % % %
+\part{Analog Integrated Circuits}
+\include{chapter4}
 
-	\bookmarksetupnext{level=-1}	
-	\include{appendix}
+% % % % % % % % % %
+\part{Digital Integrated Circuits}
 
-	% % % % % % % % % %
-	\backmatter
-	\bookmarksetupnext{level=-1}
-	% 使用 bibLaTeX 制作书目
-	\nocite{*}	% 列出所有参考文献, 即使未在正文中引用
-	\printbibliography[heading=bibintoc]
-	
-	% 图, 表索引. 可有可无.
-	\bookmarksetupnext{level=-1}
-	\listoffigures
-	\bookmarksetupnext{level=-1}
-	\listoftables
+\bookmarksetupnext{level=-1}
+\include{appendix}
 
-	% 制作索引 (用 imakeidx 的功能可以制作多份)
-	{\footnotesize
+% % % % % % % % % %
+\backmatter
+\bookmarksetupnext{level=-1}
+% 使用 bibLaTeX 制作书目
+\nocite{*}	% 列出所有参考文献, 即使未在正文中引用
+\printbibliography[heading=bibintoc]
+
+% 图, 表索引. 可有可无.
+\bookmarksetupnext{level=-1}
+\listoffigures
+\bookmarksetupnext{level=-1}
+\listoftables
+
+% 制作索引 (用 imakeidx 的功能可以制作多份)
+{\footnotesize
 	\indexprologue{中文术语按汉语拼音排序.}
 	\printindex}
 

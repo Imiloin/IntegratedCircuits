@@ -85,7 +85,7 @@
 \providecommand{\@AJ@draftstring}{{\color{gray!40}\heiti 未定稿: \today}}
 
 \onehalfspacing	% 行距
-%\raggedbottom	% 减小页面空白
+\raggedbottom	% 减小页面空白
 
 \setlength{\parindent}{2em}	% 设置适合于汉语排版的段落缩进
 
